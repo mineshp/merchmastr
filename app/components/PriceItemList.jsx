@@ -7,7 +7,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                <h1>Merch Mngr</h1>
+                <h1>Mechandise Manager</h1>
                 <div>
                     {
                         this.props.items.map(function(item, index) {

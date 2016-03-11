@@ -1,19 +1,14 @@
 var dispatcher = require('./../dispatcher.js');
+var helper = require('./../helpers/RestHelper.js');
 
 function PriceItemStore() {
-    //var items = [];
+    var items = [];
 
-    var items = [{
-        name: "Ice Cream"
-        },
-        {
-            name: "Waffle"
-        },{
-            name: "Candy",
-            purchased: true
-        }, {
-            name: "Sharks"
-    }];
+    helper.get("api/items")
+    .then(function(data) {
+        items = data;
+        triggerListeners();
+    })
 
     var listeners = [];
 
@@ -25,10 +20,10 @@ function PriceItemStore() {
         items.push(item);
         triggerListeners();
 
-        //helper.post("api/items", item);
+        helper.post("api/items", item);
     }
 
-    function deleteGroceryItem(item) {
+    function deletePriceItem(item) {
         var index;
         items.filter(function(_item, _index) {
             if (_item.name == item.name ) {
@@ -39,10 +34,10 @@ function PriceItemStore() {
         items.splice(index,1);
         triggerListeners();
 
-        //helper.del("api/items/" + item._id);
+        helper.del("api/items/" + item._id);
     }
 
-    function setGroceryItemBought(item, isBought) {
+    function setPriceItemBought(item, isBought) {
         var _item = items.filter(function(a) {
             return a.name == item.name
         })[0];
@@ -50,7 +45,7 @@ function PriceItemStore() {
         item.purchased = isBought || false;
         triggerListeners();
 
-        //helper.patch("api/items/" + item._id, item);
+        helper.patch("api/items/" + item._id, item);
     }
 
 
@@ -72,13 +67,13 @@ function PriceItemStore() {
                     addPriceItem(event.payload);
                     break;
                 case "delete":
-                    deleteGroceryItem(event.payload);
+                    deletePriceItem(event.payload);
                     break;
                 case "buy":
-                    setGroceryItemBought(event.payload, true);
+                    setPriceItemBought(event.payload, true);
                     break;
                 case "unbuy":
-                    setGroceryItemBought(event.payload, false);
+                    setPriceItemBought(event.payload, false);
                     break;
             }
         }

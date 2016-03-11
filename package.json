@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "browser-sync": "^2.11.1",
     "browserify": "^13.0.0",
     "ejs": "^2.4.1",

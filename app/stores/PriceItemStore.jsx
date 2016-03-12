@@ -17,10 +17,13 @@ function PriceItemStore() {
     }
 
     function addPriceItem(item) {
-        items.push(item);
-        triggerListeners();
 
-        helper.post("api/items", item);
+        if (item.name) {
+            items.push(item);
+            triggerListeners();
+
+            helper.post("api/items", item);
+        }
     }
 
     function deletePriceItem(item) {
